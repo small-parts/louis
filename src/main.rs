@@ -39,11 +39,11 @@ fn main() {
             .collect::<String>()
     );
     println!(
-        "{divider}{address_label:<length$}{divider}{data_label:^23}",
+        "{divider}{address_label:<length$}{divider}{data_label:^23}{divider}",
         divider = VERTICAL_DIVIDER,
         address_label = "address",
         length = address_label_length,
-        data_label = "hexadecimal data"
+        data_label = "hexadecimal data",
     );
 
     for (index, chunk) in chunks.iter().enumerate() {
@@ -55,8 +55,11 @@ fn main() {
             length = address_label_length
         );
         print!("{}", VERTICAL_DIVIDER);
-        for number in chunk.iter() {
-            print!("{:<02X} ", number);
+        for (no, number) in chunk.iter().enumerate() {
+            print!("{:<02X}", number);
+            if no + 1 < chunk.len() {
+                print!(" ")
+            }
         }
         println!("{}", VERTICAL_DIVIDER);
     }
