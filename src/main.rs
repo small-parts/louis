@@ -1,3 +1,6 @@
+pub mod error;
+pub mod options;
+
 use std::f64;
 use std::fs::File;
 use std::io::{BufReader, Read};
@@ -5,24 +8,24 @@ use std::iter;
 
 use structopt::StructOpt;
 
+use crate::error::LouisError;
 use crate::options::Options;
 
-pub mod options;
+type Result<T> = std::result::Result<T, LouisError>;
 
 const VERTICAL_DIVIDER: char = '│';
 const HORIZONTAL_DIVIDER: char = '─';
 
 fn main() {
     let opt: Options = Options::from_args();
-
     let Options { entry } = opt;
 
-    let fp = File::open(entry).unwrap();
-    let meta = fp.metadata().unwrap();
+    let f = File::open(entry).unwrap();
+    let meta = f.metadata().unwrap();
     let file_size = meta.len();
 
     let address_label_length = "address".len().max(f64::log(file_size as f64, 16.0).ceil() as usize);
-    let mut reader = BufReader::new(fp);
+    let mut reader = BufReader::new(f);
     let mut buffer = Vec::with_capacity(2 << 10);
     reader.read_to_end(&mut buffer).unwrap();
     let chunks = buffer.chunks(8).collect::<Vec<_>>();
@@ -71,3 +74,5 @@ fn main() {
         iter::repeat(HORIZONTAL_DIVIDER).take(23).collect::<String>()
     );
 }
+
+fn pretty_print() {}
