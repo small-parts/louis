@@ -21,9 +21,7 @@ fn main() {
     let meta = fp.metadata().unwrap();
     let file_size = meta.len();
 
-    let address_label_length = "address"
-        .len()
-        .max(f64::log(file_size as f64, 16.0).ceil() as usize);
+    let address_label_length = "address".len().max(f64::log(file_size as f64, 16.0).ceil() as usize);
     let mut reader = BufReader::new(fp);
     let mut buffer = Vec::with_capacity(2 << 10);
     reader.read_to_end(&mut buffer).unwrap();
@@ -34,9 +32,7 @@ fn main() {
         iter::repeat(HORIZONTAL_DIVIDER)
             .take(address_label_length)
             .collect::<String>(),
-        iter::repeat(HORIZONTAL_DIVIDER)
-            .take(23)
-            .collect::<String>()
+        iter::repeat(HORIZONTAL_DIVIDER).take(23).collect::<String>()
     );
     println!(
         "{divider}{address_label:<length$}{divider}{data_label:^23}{divider}",
@@ -62,12 +58,7 @@ fn main() {
             }
         }
         if index + 1 == chunks.len() {
-            print!(
-                "{}",
-                iter::repeat(' ')
-                    .take((8 - chunk.len()) * 3)
-                    .collect::<String>()
-            );
+            print!("{}", iter::repeat(' ').take((8 - chunk.len()) * 3).collect::<String>());
         }
         println!("{}", VERTICAL_DIVIDER);
     }
@@ -77,8 +68,6 @@ fn main() {
         iter::repeat(HORIZONTAL_DIVIDER)
             .take(address_label_length)
             .collect::<String>(),
-        iter::repeat(HORIZONTAL_DIVIDER)
-            .take(23)
-            .collect::<String>()
+        iter::repeat(HORIZONTAL_DIVIDER).take(23).collect::<String>()
     );
 }
