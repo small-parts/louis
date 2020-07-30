@@ -61,6 +61,14 @@ fn main() {
                 print!(" ")
             }
         }
+        if index + 1 == chunks.len() {
+            print!(
+                "{}",
+                iter::repeat(' ')
+                    .take((8 - chunk.len()) * 3)
+                    .collect::<String>()
+            );
+        }
         println!("{}", VERTICAL_DIVIDER);
     }
 
