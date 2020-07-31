@@ -15,10 +15,10 @@ type Result<T> = std::result::Result<T, LouisError>;
 
 fn main() {
     let opt: Options = Options::from_args();
-    let Options { entry } = opt;
+    let Options { entry, base } = opt;
 
     let f = File::open(entry).unwrap();
-    if let Err(e) = pretty_print(f) {
+    if let Err(e) = pretty_print(f, base) {
         eprintln!("{}", e);
     }
 }
