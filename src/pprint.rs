@@ -34,7 +34,7 @@ fn pretty_print_header(address_label_length: usize) {
             .take(address_label_length)
             .collect::<String>(),
         data_border = horizontal_dividers.clone().take(COLUMNS * 3 - 1).collect::<String>(),
-        ascii_border = horizontal_dividers.clone().take(COLUMNS).collect::<String>(),
+        ascii_border = horizontal_dividers.take(COLUMNS).collect::<String>(),
     );
     println!(
         "{divider}{address:<address_label_length$}{divider}{data:^data_label_length$}{divider}{ascii:^ascii_label_length$}{divider}",
@@ -91,7 +91,7 @@ fn pretty_print_footer(address_label_length: usize) {
             .take(address_label_length)
             .collect::<String>(),
         horizontal_dividers.clone().take(COLUMNS * 3 - 1).collect::<String>(),
-        horizontal_dividers.clone().take(COLUMNS).collect::<String>()
+        horizontal_dividers.take(COLUMNS).collect::<String>()
     );
 }
 
