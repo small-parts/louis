@@ -1,4 +1,5 @@
-use crate::constant::{NON_ASCII_CHARACTER, NON_PRINTABLE_CHARACTER};
+const NON_PRINTABLE_CHARACTER: char = '•';
+const NON_ASCII_CHARACTER: char = '×';
 
 pub fn itoa(i: u8) -> char {
     if !i.is_ascii() {

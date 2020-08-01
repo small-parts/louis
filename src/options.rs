@@ -15,7 +15,7 @@ pub struct Options {
     pub base: Base,
 }
 
-#[derive(StructOpt, Debug)]
+#[derive(StructOpt, Debug, Copy, Clone)]
 pub enum Base {
     Binary,
     Octal,
@@ -46,6 +46,17 @@ impl Into<f64> for Base {
             Base::Octal => 8.0,
             Base::Decimal => 10.0,
             Base::Hexadecimal => 16.0,
+        }
+    }
+}
+
+#[allow(clippy::len_without_is_empty)]
+impl Base {
+    pub fn len(&self) -> usize {
+        match self {
+            Base::Binary => 8,
+            Base::Octal | Base::Decimal => 3,
+            Base::Hexadecimal => 2,
         }
     }
 }
