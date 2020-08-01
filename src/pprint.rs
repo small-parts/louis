@@ -11,6 +11,9 @@ pub struct PrettyPrinter {
     base: Base,
     address_label_length: usize,
     reader: BufReader<File>,
+    address_label: String,
+    data_label: String,
+    ascii_label: String,
 }
 
 impl PrettyPrinter {
@@ -19,16 +22,13 @@ impl PrettyPrinter {
 
     const COLUMNS: usize = 16;
 
-    const ADDRESS_LABEL: &'static str = "address";
-    const HEX_LABEL: &'static str = "hexadecimal data";
-    const ASCII_LABEL: &'static str = "ascii";
-
     pub fn new<P: AsRef<Path>>(entry: P, base: Base) -> Result<Self> {
         let f = File::open(entry)?;
         let metadata = f.metadata()?;
         let file_size = metadata.len();
+        let address_label = String::from("address");
 
-        let address_label_length = Self::ADDRESS_LABEL
+        let address_label_length = address_label
             .len()
             .max(f64::log(file_size as f64, base.into()).ceil() as usize);
         let reader = BufReader::new(f);
@@ -37,6 +37,9 @@ impl PrettyPrinter {
             base,
             address_label_length,
             reader,
+            address_label,
+            data_label: format!("{} data", base.as_str()),
+            ascii_label: String::from("ascii"),
         })
     }
 
@@ -69,11 +72,11 @@ impl PrettyPrinter {
         println!(
             "{divider}{address:<address_label_length$}{divider}{data:^data_label_length$}{divider}{ascii:^ascii_label_length$}{divider}",
             divider = Self::VERTICAL_DIVIDER,
-            address = Self::ADDRESS_LABEL,
+            address = self.address_label,
             address_label_length = self.address_label_length,
-            data = Self::HEX_LABEL,
+            data = self.data_label,
             data_label_length = Self::COLUMNS * (self.base.len() + 1) - 1,
-            ascii = Self::ASCII_LABEL,
+            ascii = self.ascii_label,
             ascii_label_length = Self::COLUMNS,
         );
     }
@@ -93,10 +96,10 @@ impl PrettyPrinter {
                 print!(
                     "{}",
                     match self.base {
-                        Base::Binary => format!("{:<0length$b}", number, length=self.base.len()),
-                        Base::Octal => format!("{:<0length$o}", number, length=self.base.len()),
-                        Base::Decimal => format!("{:<0length$}", number, length=self.base.len()),
-                        Base::Hexadecimal => format!("{:<0length$x}", number, length=self.base.len()),
+                        Base::Binary => format!("{:<0length$b}", number, length = self.base.len()),
+                        Base::Octal => format!("{:<0length$o}", number, length = self.base.len()),
+                        Base::Decimal => format!("{:<0length$}", number, length = self.base.len()),
+                        Base::Hexadecimal => format!("{:<0length$x}", number, length = self.base.len()),
                     }
                 );
                 if no + 1 < chunk.len() {

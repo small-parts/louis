@@ -59,4 +59,13 @@ impl Base {
             Base::Hexadecimal => 2,
         }
     }
+
+    pub fn as_str(&self) -> &str {
+        match self {
+            Base::Binary => "binary",
+            Base::Octal => "octal",
+            Base::Decimal => "decimal",
+            Base::Hexadecimal => "hexadecimal",
+        }
+    }
 }
