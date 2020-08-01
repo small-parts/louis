@@ -4,6 +4,7 @@ use std::iter::repeat;
 
 use crate::constant::{ADDRESS_LABEL, ASCII_LABEL, COLUMNS, HEX_LABEL, HORIZONTAL_DIVIDER, VERTICAL_DIVIDER};
 use crate::options::Base;
+use crate::utils::itoa;
 use crate::Result;
 
 pub fn pretty_print(f: File, base: Base) -> Result<()> {
@@ -93,12 +94,4 @@ fn pretty_print_footer(address_label_length: usize) {
         horizontal_dividers.clone().take(COLUMNS * 3 - 1).collect::<String>(),
         horizontal_dividers.take(COLUMNS).collect::<String>()
     );
-}
-
-fn itoa(i: u8) -> char {
-    if i.is_ascii_alphanumeric() {
-        i as char
-    } else {
-        '.'
-    }
 }

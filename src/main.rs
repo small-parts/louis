@@ -2,6 +2,7 @@ pub mod constant;
 pub mod error;
 pub mod options;
 pub mod pprint;
+pub mod utils;
 
 use std::fs::File;
 
