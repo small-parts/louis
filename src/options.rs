@@ -13,6 +13,15 @@ pub struct Options {
 
     #[structopt(short = "b", long = "base", default_value = "hex")]
     pub base: Base,
+
+    #[structopt(long = "non-color")]
+    pub non_color: bool,
+
+    #[structopt(long = "skip", default_value = "0")]
+    pub skip: u64,
+
+    #[structopt(long = "limit", default_value = "18446744073709551615")]
+    pub limit: u64,
 }
 
 #[derive(StructOpt, Debug, Copy, Clone)]

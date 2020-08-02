@@ -1,3 +1,4 @@
+pub mod color;
 pub mod error;
 pub mod options;
 pub mod pprint;
@@ -13,9 +14,8 @@ type Result<T> = std::result::Result<T, LouisError>;
 
 fn main() {
     let opt: Options = Options::from_args();
-    let Options { entry, base } = opt;
 
-    if let Err(e) = PrettyPrinter::new(entry, base).and_then(|mut printer| printer.pretty_print()) {
+    if let Err(e) = PrettyPrinter::new(opt).and_then(|mut printer| printer.pretty_print()) {
         eprintln!("{}", e);
     }
 }
