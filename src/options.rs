@@ -8,19 +8,19 @@ use crate::error::LouisError;
 #[derive(StructOpt, Debug)]
 #[structopt(name = "A command-line hex viewer", author = "ltoddy - taoliu0509@gmail.com")]
 pub struct Options {
-    #[structopt(name = "path", parse(from_os_str))]
+    #[structopt(name = "path", parse(from_os_str), help = "The file")]
     pub entry: PathBuf,
 
-    #[structopt(short = "b", long = "base", default_value = "hex")]
+    #[structopt(short = "b", long = "base", default_value = "hex", help = "Display data base")]
     pub base: Base,
 
     #[structopt(long = "non-color")]
     pub non_color: bool,
 
-    #[structopt(long = "skip", default_value = "0")]
+    #[structopt(long = "skip", default_value = "0", help = "Skip the first N bytes of the file.")]
     pub skip: u64,
 
-    #[structopt(long = "limit", default_value = "18446744073709551615")]
+    #[structopt(long = "limit", default_value = "18446744073709551615", help = "Only read N bytes from file")]
     pub limit: u64,
 }
 
